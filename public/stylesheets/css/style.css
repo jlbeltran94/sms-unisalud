@@ -1,0 +1,21 @@
+html,body{ 
+	width:100%;
+	height:100%;	
+}
+.contenedor {
+    padding: 10px;
+    background: rgba(0,0,0,.8);    
+    color: white;
+    position: relative;
+    font-weight: 400;
+   
+}
+.bkgnd{
+	position:fixed;
+  	width: 100%; height: 100%; 
+  	background-color: #f0f0f0; 
+  	background-image: url("http://unisalud.unicauca.edu.co/sites/default/files/unidad_de_salud_unicauca_mayo.jpg"); 
+  	background-repeat: no-repeat; 
+  	background-size: cover; 
+  	background-position: 50% 50%;
+}
