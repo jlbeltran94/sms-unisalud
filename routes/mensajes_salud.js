@@ -3,12 +3,12 @@ var router = express.Router();
 /* NEXMO */
 var Nexmo = require('nexmo');
 var nexmo = new Nexmo({
-    apiKey: '7c58869e',
+    apiKey: '7c58869e', //CAMBIAR POR LOS DATOS DE LA CUENTA
     apiSecret: '36c2c887966fa59e',
 });
 /* FIN NEXMO */
 /* ELIBOM */
-var elibom = require('elibom')('jlbeltran94@gmail.com', '9wvW131RZZ')
+var elibom = require('elibom')('jlbeltran94@gmail.com', '9wvW131RZZ') //AQUI INGRESAR DATOS CORRESPONDIENTES A LA CUENTA
 /* FIN ELIBOM*/
 /* CONEXION FIREBIRD */
 var Firebird = require('node-firebird');
@@ -16,7 +16,7 @@ var options = {};
 
 options.host = '127.0.0.1';
 options.port = 3050;
-options.database = 'D:/univ/9/UNISALUD.GDB';
+options.database = 'D:/univ/9/UNISALUD2.GDB'; //ARCHIVO BASE DE DATOS
 options.user = 'SYSDBA';
 options.password = 'masterkey';
 options.lowercase_keys = false; // set to true to lowercase keys 
@@ -27,7 +27,7 @@ options.pageSize = 4096;        // default when creating database
 var contador = 0;
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('mensajes_salud', { title: 'Express' });
+    res.render('mensajes_salud', { title: 'Mensajes Saludables' });
 });
 
 router.post('/', function (req, res, next) {
@@ -44,10 +44,9 @@ router.post('/', function (req, res, next) {
             throw err;
 
         // db = DATABASE 
-        db.query('SELECT * FROM PRUEBA2 ', function (err, result) {
+        db.query('SELECT * FROM DAT_PER ', function (err, result) {
             if (result) {
                 for (i = 0; i < result.length; i++) {
-                    console.log(result[i]);
                     let sexo = false;
                     let niño = false;
                     let adolescente = false;
@@ -55,71 +54,70 @@ router.post('/', function (req, res, next) {
                     let adulto = false;
                     let adultom = false;
                     if (Array.isArray(generos)) {
-                        if (generos.includes(result[i].SEXO)) {
-                            console.log('cumple con genero');
+                        if (generos.includes(result[i].SEX_PAC)) {
                             sexo = true;
                         }
                     } else {
-                        if (generos == result[i].SEXO.toString()) {
-                            console.log('cumple con genero');
+                        if (generos == result[i].SEX_PAC.toString()) {
                             sexo = true;
                         }
                     }
-                    if (body.Ninos) {                        
-                        if ('0' <= result[i].EDAD && result[i].EDAD <= '10') {
+                    if (body.Ninos) {
+                        if ('0' <= result[i].EDA_PAC && result[i].EDA_PAC <= '10') {
                             niño = true;
-                            console.log("niños");
                         }
                     }
-                    if (body.Adolescentes) {                        
-                        if ('11' <= result[i].EDAD && result[i].EDAD <= '17') {
+                    if (body.Adolescentes) {
+                        if ('11' <= result[i].EDA_PAC && result[i].EDA_PAC <= '17') {
                             adolescente = true;
-                            console.log("adolescentes");
                         }
                     }
-                    if (body.Jovenes) {                        
-                        if ('18' <= result[i].EDAD && result[i].EDAD <= '30') {
+                    if (body.Jovenes) {
+                        if ('18' <= result[i].EDA_PAC && result[i].EDA_PAC <= '30') {
                             joven = true;
-                            console.log("jovenes");
                         }
                     }
                     if (body.Adultos) {
-                        if ('31' <= result[i].EDAD && result[i].EDAD <= '60') {
+                        if ('31' <= result[i].EDA_PAC && result[i].EDA_PAC <= '60') {
                             adulto = true;
-                            console.log("adultos");
                         }
                     }
                     if (body.Adulto_Mayor) {
-                        if ('61' <= result[i].EDAD && result[i].EDAD <= '100') {
+                        if ('61' <= result[i].EDA_PAC && result[i].EDA_PAC <= '100') {
                             adultom = true;
-                            console.log("adulto mayor");
                         }
                     }
                     if (sexo && (niño || adolescente || joven || adulto || adultom)) {
                         let celular = '57' + result[i].CELULAR;
                         console.log(celular);
+                        nexmo.message.sendSms('Unidad de salud', celular, body.mensaje, function (err, data) {
+                            if (!err) {
+                                console.log(data);
+
+                            } else {
+                                console.log(err.message)
+                            }
+                        });
+
+                        // elibom.sendMessage(celular, body.mensaje, function (err, data) {
+                        //   if (!err) {
+                        //     console.log(data);
+                        //   } else {
+                        //     console.log(err.message)
+                        //   }
+                        // });
                     }
 
                 }
             }
-
-
-
-
-            // elibom.sendMessage(result[4].NOMBRE, 'asd', function (err, data) {
-            //   if (!err) {
-            //     console.log(data);
-            //   } else {
-            //     console.log(err.message)
-            //   }
-            // });
+         
             // IMPORTANT: close the connection 
             db.detach();
         });
 
     });
     /*FIN BUSQUEDA DE USUARIOS*/
-    res.render('mensajes_salud', { title: 'Prueba' });
+    res.render('mensajes_salud', { title: 'Mensajes Saludables' });
 
 });
 

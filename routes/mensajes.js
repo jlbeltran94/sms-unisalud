@@ -16,7 +16,7 @@ var contador = 0;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('enviar_mensajes', { title: 'Prueba' });
+    res.render('enviar_mensajes', { title: 'Envio de Mensajes' });
 });
 
 router.post('/', function (req, res, next) {
@@ -30,7 +30,7 @@ router.post('/', function (req, res, next) {
         nexmo.message.sendSms('yo', destinos.toString(), body.mensaje, function (err, data) {
             if (!err) {
                 console.log(data);
-                contador = contador+1;
+                contador = contador + 1;
             } else {
                 console.log(err.message)
             }
@@ -49,12 +49,10 @@ router.post('/', function (req, res, next) {
         });
         /*FIN ENVIO CON ELIBOM*/
     }
-    if (contador == destinatariostot.length){
-        res.render('enviar_mensajes', { title: 'Prueba' });
-    }else{
-        res.render('enviar_mensajes', { title: 'ERROR' });
-    }
-    
+
+    res.render('enviar_mensajes', { title: 'Envio de Mensajes' });
+
+
 });
 
 
