@@ -35,26 +35,38 @@ options.pageSize = 4096;        // default when creating database
 
 
 /**********************************************************************/
-
-var task = cron.schedule('0 7 * * 1-5', function () {
+var currentDate = new Date();
+var tomorrow = currentDate.setDate(currentDate.getDate() + 1);
+var date = new Date(tomorrow);
+var fecha = date.toLocaleDateString();
+var fecha2 = fecha.split('-');
+var fecha3 = fecha2[1] + "/" + fecha2[2] + "/" + fecha2[0]; //fecha de mañana
+console.log(fecha3);
+/**********************************************************************/
+                  //  # ┌────────────── segundos (opcional)
+                  //  # │ ┌──────────── minuto
+                  //  # │ │ ┌────────── hora
+                  //  # │ │ │ ┌──────── dia del mes
+                  //  # │ │ │ │ ┌────── me
+                  //  # │ │ │ │ │ ┌──── dia de la semana
+                  //  # │ │ │ │ │ │
+                  //  # │ │ │ │ │ │
+                  //  # * * * * * *
+var task = cron.schedule('0 7 * * 1-5', function () { 
+  //el recordatorio de citas se realizara automaticamente de lunes a viernes a las 7 am 
+  // https://crontab.guru/#0_7_*_*_1-5 
   /************************/
   Firebird.attach(options, function (err, db) {
-    var currentDate = new Date();
-    var tomorrow = currentDate.setDate(currentDate.getDate() + 1);
-    var date = new Date(tomorrow);
-    var fecha = date.toLocaleDateString();
-    var fecha2 = fecha.split('-');
-    var fecha3 = fecha2[1] + "/" + fecha2[2] + "/" + fecha2[0]; //fecha de mañana
-    console.log(fecha3);
 
     if (err)
       throw err;
 
-    // db = DATABASE 
+    // consulta a la base de datos
     db.query("SELECT CITAS.ID_PACIENTE, CITAS.FECHA_CITA, CITAS.HORA_CITA, coalesce(DAT_PER.NM1_PAC,' ') ||' '||coalesce(DAT_PER.NM2_PAC,'')||' '||coalesce(DAT_PER.AP1_PAC,'')||' '||coalesce(DAT_PER.AP2_PAC,'') \"PACIENTE\", DAT_PER.CELULAR,CONCEPTO_CITA.DESCRIPCION AS MOTIVO FROM CITAS JOIN DAT_PER ON DAT_PER.ID_PACIENTE = CITAS.ID_PACIENTE JOIN CONCEPTO_CITA ON CONCEPTO_CITA.ID = CITAS.ID_CONCEPTO WHERE CITAS.FECHA_CITA = ? AND CITAS.FECHA_ANULA IS NULL AND CITAS.ID_PACIENTE <> -1", [fecha3], function (err, result) {
       if (result) {
         for (i = 0; i < result.length; i++) {
           var celular = '57' + result[i].CELULAR;
+          //parseo de la hora, para pasar de formato 24h a 12h
           var horadb = result[i].HORA_CITA;
           var horadb2 = horadb + '';
           var horasplit = horadb2.split(' ');
@@ -69,9 +81,13 @@ var task = cron.schedule('0 7 * * 1-5', function () {
             var horas = horadots[0] - 0;
             var h12 = 'am';
           }
-          var hora = horas + ':' + horadots[1] + ' ' + h12;
-          var mensaje = "La unidad de salud te recuerda que tu cita esta programada para mañana a las " + hora + " , si no puedes asistir por favor cancelala";
+          var minutos = horadots[1];
+          var hora = horas + ':' + minutos + ' ' + h12;
+          //mensaje predeterminado que sera enviado para recordar la cita
+          var mensaje = "La Unidad de salud te recuerda que tu cita está programada para mañana a las " + hora + " , si no puedes asistir por favor cancélala.";
           console.log(mensaje);
+
+          //***********enviar mensaje *******/
 
           // elibom.sendMessage(celular, mensaje, function (err, data) {
           //   if (!err) {

@@ -36,7 +36,7 @@ router.post('/', function (req, res, next) {
     var generos = body.Genero;
 
 
-    /* BUSQUEDA DE USUARIOS SELECCIONADOS */
+    /* BUSQUEDA DE USUARIOS */
     Firebird.attach(options, function (err, db) {
 
 
@@ -53,6 +53,7 @@ router.post('/', function (req, res, next) {
                     let joven = false;
                     let adulto = false;
                     let adultom = false;
+                    /* verificacion de que el usuario cumpla las caracteristicas deseadas */
                     if (Array.isArray(generos)) {
                         if (generos.includes(result[i].SEX_PAC)) {
                             sexo = true;
@@ -87,9 +88,10 @@ router.post('/', function (req, res, next) {
                             adultom = true;
                         }
                     }
+                    /* FIN DE LA VERIFICACION */
+                    /* SI CUMPLE LAS CARACTERISTICAS SE ENVIA EL MENSAJE */
                     if (sexo && (niño || adolescente || joven || adulto || adultom)) {
                         let celular = '57' + result[i].CELULAR;
-                        console.log(celular);
                         nexmo.message.sendSms('Unidad de salud', celular, body.mensaje, function (err, data) {
                             if (!err) {
                                 console.log(data);
@@ -110,7 +112,7 @@ router.post('/', function (req, res, next) {
 
                 }
             }
-         
+
             // IMPORTANT: close the connection 
             db.detach();
         });
