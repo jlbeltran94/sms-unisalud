@@ -8,6 +8,7 @@
             <p>
                 Seleccione el genero de los usuarios a los cuales se enviara el mensaje:
             </p>
+            {{!--CHECKBOXS PARA SELECCIONAR EL GENERO DE LOS USUARIOS A LOS CUALES SE ENVIARA EL MENSAJE--}}
             <p>
                 <input type="checkbox" id="M" name="Genero" value="M" />
                 <label for="M">Masculino</label>
@@ -18,8 +19,10 @@
                 <label for="F">Femenino</label>
             </p>
             <p>
+            {{!--FIN DE LA SELECCION DEL GENERO--}}
                 Seleccione las edades de los usuarios:
             </p>
+            {{!--CHECKBOXS PARA SELECCIONAR LAS EDADES DE LOS USUARIOS A LOS CUALES SE ENVIARA EL MENSAJE--}}
             <p>
                 <input type="checkbox" id="Niños" name="Ninos" value="Niños" />
                 <label for="Niños">Niños</label>
@@ -40,11 +43,15 @@
                 <input type="checkbox" id="Adulto_Mayor" name="Adulto_Mayor" value="Adulto_Mayor" />
                 <label for="Adulto_Mayor">Adulto Mayor</label>
             </p>
+            {{!--FIN DE SELECCION DE EDADES--}}
+
+            {{!--TEXT AREA PARA INGRESAR EL MENSAJE A ENVIAR--}}
             <div class="input-field col s12 m12 12">
                 <i class="material-icons prefix">comment</i>
                 <textarea name="mensaje" type="text" class="materialize-textarea validate" required></textarea>
                 <label for="icon_prefix" data-error="error" data-success="correcto">Mensaje Saludable</label>
             </div>
+            {{!--BOTON PARA ENVIAR EL MENSAJE--}}
             <div class="center">
                 <button class="btn tooltipped waves-effect waves-light " data-position="bottom" data-delay="50" data-tooltip="Enviar" type="submit"
                     name="enviar">Enviar

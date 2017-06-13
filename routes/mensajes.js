@@ -16,7 +16,7 @@ var contador = 0;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('enviar_mensajes', { title: 'Envio de Mensajes' });
+    res.render('enviar_mensajes', { title: 'Envio de Mensajes'});
 });
 
 router.post('/', function (req, res, next) {
@@ -47,7 +47,7 @@ router.post('/', function (req, res, next) {
         /*FIN ENVIO CON ELIBOM*/
     }
 
-    res.render('enviar_mensajes', { title: 'Envio de Mensajes' });
+    res.render('enviar_mensajes', { title: 'Envio de Mensajes'});
 
 
 });

@@ -24,6 +24,7 @@
 
 <body>
   <div id="particles-js"></div>
+  {{!--BARRA DE NAVEGACION--}}
   <nav>
     <div class="nav-wrapper blue-grey darken-1">
       <a id="logo-container" href="#" class="brand-logo">Recordatorio de Citas</a>
@@ -32,12 +33,14 @@
         <li><a href="/">Enviar mensaje</a></li>
         <li><a href="/mensajes_salud">Mensajes Saludables</a></li>
       </ul>
+      {{!--BARRA DE NAVEGACION SI ES UN DISPOSITIVO MOVIL--}}
       <ul class="side-nav blue-grey darken-1" id="mobile-demo">
         <li><a class="white-text" href="/">Enviar mensaje</a></li>
         <li><a class="white-text" href="/mensajes_salud">Mensajes Saludables</a></li>
       </ul>
     </div>
   </nav>
+  {{!--FIN BARRA DE NAVEGACION--}}
   {{{body}}}
 
 </body>

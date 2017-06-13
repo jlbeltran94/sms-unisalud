@@ -84,7 +84,7 @@ var task = cron.schedule('0 7 * * 1-5', function () {
           var minutos = horadots[1];
           var hora = horas + ':' + minutos + ' ' + h12;
           //mensaje predeterminado que sera enviado para recordar la cita
-          var mensaje = "La Unidad de salud te recuerda que tu cita está programada para mañana a las " + hora + " , si no puedes asistir por favor cancélala.";
+          var mensaje = "La Unidad de salud te recuerda que tu cita está programada para manana a las " + hora + " , si no puedes asistir por favor cancélala.";
           console.log(mensaje);
 
           //***********enviar mensaje *******/

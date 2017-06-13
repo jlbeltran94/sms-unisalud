@@ -119,7 +119,7 @@ router.post('/', function (req, res, next) {
 
     });
     /*FIN BUSQUEDA DE USUARIOS*/
-    res.render('mensajes_salud', { title: 'Mensajes Saludables' });
+    res.render('mensajes_salud', { title: 'Mensajes Saludables'});
 
 });
 

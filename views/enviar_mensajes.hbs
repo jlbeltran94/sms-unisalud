@@ -5,13 +5,15 @@
     <div class="contenedor">
         <div class="row">
             <form class="col s12" method="post">
-                <div class="row">                    
+                <div class="row">
+                    {{!--CAMPO DE TEXTO PARA LOS NUMEROS DE CELULAR--}}
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix" id="icon_telephone">phone</i>
                         <input id="icon_telephone" name="telefono" type="tel" class="validate" required>
                         <label for="icon_telephone">Numero de telefono ej: 3151234567</label>
                     </div>
                 </div>
+                {{!--TEXT AREA PARA EL MENSAJE A ENVIAR--}}
                 <div class="row">
                     <div class="input-field col s12 m12 12">
                         <i class="material-icons prefix">comment</i>
@@ -19,6 +21,7 @@
                         <label for="icon_prefix" data-error="error" data-success="correcto">Contenido del mensaje</label>
                     </div>
                 </div>
+                {{!--BOTON PARA ENVIAR EL MENSAJE--}}
                 <div class="center">
                     <button class="btn tooltipped waves-effect waves-light " data-position="bottom" data-delay="50" data-tooltip="Enviar" type="submit"
                         name="enviar">Enviar
