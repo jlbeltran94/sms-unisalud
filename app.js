@@ -34,14 +34,6 @@ options.role = null;            // default
 options.pageSize = 4096;        // default when creating database 
 
 
-/************************FECHA DE MAÑANA**********************************************/
-var currentDate = new Date();
-var tomorrow = currentDate.setDate(currentDate.getDate() + 1);
-var date = new Date(tomorrow);
-var fecha = date.toLocaleDateString();
-var fecha2 = fecha.split('-');
-var fecha3 = fecha2[1] + "/" + fecha2[2] + "/" + fecha2[0]; //fecha de mañana
-console.log(fecha3);
 /************************CONFIGURACION PARA QUE SEA AUTOMATICO**********************************************/
                   //  # ┌────────────── segundos (opcional)
                   //  # │ ┌──────────── minuto
@@ -56,6 +48,15 @@ var task = cron.schedule('0 7 * * 1-5', function () {
   //el recordatorio de citas se realizara automaticamente de lunes a viernes a las 7 am 
   // mas informacion => https://crontab.guru/#0_7_*_*_1-5 
   /************************/
+  
+/************************FECHA DE MAÑANA**********************************************/
+  var currentDate = new Date();
+  var tomorrow = currentDate.setDate(currentDate.getDate() + 1);
+  var date = new Date(tomorrow);
+  var fecha = date.toLocaleDateString();
+  var fecha2 = fecha.split('-');
+  var fecha3 = fecha2[1] + "/" + fecha2[2] + "/" + fecha2[0]; //fecha de mañana
+  console.log(fecha3);
   Firebird.attach(options, function (err, db) {
 
     if (err)
